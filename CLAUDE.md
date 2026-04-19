@@ -72,23 +72,20 @@ Start minimal: semantic content → LLM → HTML/CSS → browser. Validate each 
 - [x] Static HTML validation — parse and reject illegal LLM output before browser delivery
 - [x] Render a page end-to-end and open it in a browser
 
-### Milestone 1 — End-to-End Pipeline (Layer 1)
-- [x] Choose 3–4 target static pages (1 article, 1–2 docs)
+### Milestone 1 — End-to-End Pipeline
 - [x] Build Scraper — fetch, strip boilerplate, cache raw HTML to disk
 - [x] Build LLM-based extractor — HTML → SemanticContent with JSON validation
 - [x] Wire full pipeline — scrape → extract → render → output file
-- [x] Run pipeline on target URLs across 2 profiles, verify output
 
-### Milestone 2 — Clean Demo (Layer 2)
-- [ ] Hand-author 3–5 content samples in the schema
-- [ ] Build 2–3 distinct user profiles
-- [ ] Generate demo pages that visibly differ per profile
-- [ ] Confirm accessibility improvements are observable (manual check)
+### Milestone 2 — Rendering API
+- [ ] HTTP server exposing a render endpoint — accepts URL + profile, returns HTML
+- [ ] Profile selection (default profiles available, custom profile supported)
+- [ ] Verify end-to-end via curl / browser fetch
 
 ### Milestone 3 — Browser Extension
 - [ ] Extension captures page HTML
-- [ ] Deterministic HTML → semantic JSON transpiler (restricted tag set)
 - [ ] Sends to rendering API, injects result back into page
+- [ ] Profile picker UI in the extension
 - [ ] Works on target static sites end-to-end
 
 ### Milestone 4 — Evaluation

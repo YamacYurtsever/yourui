@@ -3,7 +3,7 @@ import fs from "fs/promises";
 import path from "path";
 
 const PORT = 3000;
-const OUTPUT_DIR = "output";
+const OUTPUT_DIR = "output/rendered";
 
 const MIME: Record<string, string> = {
   ".html": "text/html",

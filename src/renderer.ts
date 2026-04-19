@@ -1,12 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { SemanticContent } from "../schemas/content.js";
 import type { UserProfile } from "../schemas/profile.js";
-import { validateHtml, stripFences } from "./validate.js";
+import { validateHtml, sanitizeHtml, stripFences } from "./validate.js";
 
 const client = new Anthropic();
 
 const SYSTEM_PROMPT = `
 You are a UI renderer. Given structured semantic content and a user profile, produce a complete, self-contained HTML page with embedded CSS.
+
 Rules:
 - Output ONLY valid HTML — no markdown, no explanation, no code fences
 - Embed all styles in a <style> tag in <head>
@@ -35,7 +36,7 @@ export async function render(
 ): Promise<string> {
   const message = await client.messages.create({
     model: "claude-sonnet-4-6",
-    max_tokens: 4096,
+    max_tokens: 8192,
     system: SYSTEM_PROMPT,
     messages: [
       {
@@ -48,10 +49,12 @@ export async function render(
   const block = message.content[0];
   if (block.type !== "text") throw new Error("Unexpected response type");
 
-  const result = validateHtml(block.text);
+  const sanitized = sanitizeHtml(stripFences(block.text));
+
+  const result = validateHtml(sanitized);
   if (!result.valid) {
     throw new Error(`LLM output failed validation:\n${result.errors.join("\n")}`);
   }
 
-  return stripFences(block.text);
+  return sanitized;
 }

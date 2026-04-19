@@ -53,11 +53,10 @@ describe("validateHtml", () => {
     assert.ok(result.errors.some((e) => e.includes("<style>")));
   });
 
-  test("rejects page with <script> tags", () => {
+  test("accepts page with <script> tags (scripts are stripped by sanitizeHtml before validation)", () => {
     const html = `<html><head><title>T</title><style>body{}</style></head><body><script>alert(1)</script><p>hi</p></body></html>`;
     const result = validateHtml(html);
-    assert.equal(result.valid, false);
-    assert.ok(result.errors.some((e) => e.includes("<script>")));
+    assert.equal(result.valid, true);
   });
 
   test("rejects page with empty body", () => {

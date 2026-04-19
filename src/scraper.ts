@@ -8,14 +8,14 @@ export function slugify(url: string): string {
   return url.replace(/https?:\/\//, "").replace(/[^a-zA-Z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
 }
 
-export async function scrape(url: string, cacheDir = "output/raw"): Promise<string> {
+export async function scrape(url: string, cacheDir = "output/scraped"): Promise<string> {
   await fs.mkdir(cacheDir, { recursive: true });
   const cachePath = path.join(cacheDir, `${slugify(url)}.html`);
 
   // Return cached version if available
   try {
     const cached = await fs.readFile(cachePath, "utf-8");
-    console.log(`  (cached) ${url}`);
+    console.log(`  (cached scrape) ${cachePath}`);
     return cached;
   } catch {
     // Not cached yet — fetch
@@ -44,7 +44,7 @@ function clean(html: string): string {
 
   // Truncate if still too large
   if (Buffer.byteLength(cleaned) > MAX_BYTES) {
-    return Buffer.from(cleaned).slice(0, MAX_BYTES).toString("utf-8");
+    return Buffer.from(cleaned).subarray(0, MAX_BYTES).toString("utf-8");
   }
 
   return cleaned;

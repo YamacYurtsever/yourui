@@ -149,7 +149,7 @@ export const profileComplexNeeds: UserProfile = {
   codeVisibility: "hide",
 };
 
-// ─── All profiles (useful for demo page iteration) ────────────────────────────
+// ─── Registry ─────────────────────────────────────────────────────────────────
 
 export const allProfiles: UserProfile[] = [
   profileDefault,
@@ -161,3 +161,14 @@ export const allProfiles: UserProfile[] = [
   profileExecutive,
   profileComplexNeeds,
 ];
+
+export const profilesById = new Map(allProfiles.map((p) => [p.id, p]));
+
+export function getProfile(id: string): UserProfile {
+  const profile = profilesById.get(id);
+  if (!profile) {
+    const available = allProfiles.map((p) => p.id).join(", ");
+    throw new Error(`Unknown profile "${id}". Available: ${available}`);
+  }
+  return profile;
+}

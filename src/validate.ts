@@ -36,12 +36,14 @@ export function validateHtml(html: string): ValidationResult {
     errors.push("<body> is empty");
   }
 
-  const scripts = root.querySelectorAll("script");
-  if (scripts.length > 0) {
-    errors.push(`<script> tags are not allowed — renderer emitted ${scripts.length} script block(s)`);
-  }
-
   return { valid: errors.length === 0, errors };
+}
+
+// Strips <script> tags from rendered HTML — the LLM occasionally emits them despite instructions.
+export function sanitizeHtml(html: string): string {
+  const root = parse(html);
+  root.querySelectorAll("script").forEach((el) => el.remove());
+  return root.toString();
 }
 
 // Strips markdown code fences from any LLM output (html, json, or plain).

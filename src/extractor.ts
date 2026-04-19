@@ -4,7 +4,8 @@ import { stripFences } from "./validate.js";
 
 const client = new Anthropic();
 
-const SYSTEM_PROMPT = `You are a semantic content extractor. Given raw HTML for a web page, extract its primary content into a JSON object matching the SemanticContent schema below.
+const SYSTEM_PROMPT = `
+You are a semantic content extractor. Given raw HTML for a web page, extract its primary content into a JSON object matching the SemanticContent schema below.
 
 Rules:
 - Output ONLY a valid JSON object — no markdown fences, no explanation
