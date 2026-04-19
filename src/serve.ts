@@ -23,11 +23,12 @@ const server = http.createServer(async (req, res) => {
       .map((f) => `<li><a href="/${f}">${f.replace(".html", "")}</a></li>`)
       .join("\n");
     res.writeHead(200, { "Content-Type": "text/html" });
-    res.end(`<!DOCTYPE html>
+    res.end(`
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>YourUI — Rendered Pages</title>
+  <title>YourUI</title>
   <style>
     body { font-family: system-ui, sans-serif; max-width: 600px; margin: 4rem auto; padding: 0 1rem; }
     h1 { font-size: 1.4rem; margin-bottom: 0.5rem; }
@@ -40,10 +41,10 @@ const server = http.createServer(async (req, res) => {
 </head>
 <body>
   <h1>YourUI</h1>
-  <p>Rendered pages — re-run <code>npm run render</code> to regenerate.</p>
-  <ul>${links || "<li>No pages yet — run <code>npm run render</code> first.</li>"}</ul>
+  <ul>${links || "<li>No pages</li>"}</ul>
 </body>
-</html>`);
+</html>
+    `);
     return;
   }
 

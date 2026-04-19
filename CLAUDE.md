@@ -47,6 +47,7 @@ Prior art: ARIA roles (inverted usage), SSML.
 
 - **Dynamic web apps**: state machines, side effects, async flows are hard to extract semantically — static rendering is tractable, dynamic is not
 - **Semantic extraction of behavior**: not just content structure but interactive intent
+- **Multi-page applications**: pages on the same domain link to each other — the pipeline currently renders each URL in isolation with no awareness of site structure, navigation between re-rendered pages, or shared state across pages
 - **Per-user rendering cost**: motivates caching and clustering (Layer 3)
 - **Presentation leakage**: keeping the semantic layer free of layout assumptions
 
