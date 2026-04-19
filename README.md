@@ -17,10 +17,10 @@ echo "ANTHROPIC_API_KEY=sk-ant-..." > .env
 
 ```bash
 # Render a page (default profile)
-npm run render -- --url https://example.com
+npm run process -- --url https://example.com
 
 # Render with a specific profile
-npm run render -- --url https://example.com --profile low-vision
+npm run process -- --url https://example.com --profile low-vision
 
 # View rendered pages in browser
 npm run serve   # → http://localhost:3000
@@ -43,6 +43,6 @@ Re-running the same URL only calls the LLM for uncached stages.
 ## Development
 
 ```bash
-npm test          # run unit tests
-npm run typecheck # type check
+npm run test      # run unit tests
+npm run typecheck # run type check
 ```
