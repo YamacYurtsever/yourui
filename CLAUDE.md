@@ -60,6 +60,12 @@ Prior art: ARIA roles (inverted usage), SSML.
 
 Start minimal: semantic content → LLM → HTML/CSS → browser. Validate each layer before building the next. Prefer clean schemas over scraping noise where possible.
 
+## Conventions
+
+- Run `npm test` before every commit — do not commit if tests fail
+- Run `npm run typecheck` before every commit — do not commit if type errors exist
+- Commit after each meaningful unit of work with a descriptive message
+
 ---
 
 ## Milestones
