@@ -1,11 +1,16 @@
 import Anthropic from "@anthropic-ai/sdk";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import type { SemanticContent } from "../schemas/content.js";
 import { stripFences } from "./validate.js";
 
 const client = new Anthropic();
 
-const SYSTEM_PROMPT = `
-You are a semantic content extractor. Given raw HTML for a web page, extract its primary content into a JSON object matching the SemanticContent schema below.
+const schemaPath = path.resolve(fileURLToPath(import.meta.url), "../../schemas/content.ts");
+const schemaSource = fs.readFileSync(schemaPath, "utf-8");
+
+const SYSTEM_PROMPT = `You are a semantic content extractor. Given raw HTML for a web page, extract its primary content into a JSON object matching the SemanticContent schema below.
 
 Rules:
 - Output ONLY a valid JSON object — no markdown fences, no explanation
@@ -16,33 +21,10 @@ Rules:
 - Map <blockquote> → QuoteBlock, <pre><code> → CodeBlock, .note/.warning/.tip class patterns → CalloutBlock
 - Never invent content not present in the HTML
 
-Schema (TypeScript):
+Schema (TypeScript source of truth):
 
 \`\`\`ts
-interface Author { name: string; url?: string }
-interface MediaItem { url: string; alt: string; caption?: string }
-interface Link { label: string; url: string }
-
-type BodyBlock =
-  | { type: "paragraph"; text: string }
-  | { type: "heading"; level: 1 | 2 | 3 | 4; text: string; id?: string }
-  | { type: "code"; language?: string; code: string; caption?: string }
-  | { type: "list"; ordered: boolean; items: string[] }
-  | { type: "callout"; intent: "info" | "warning" | "danger" | "tip"; text: string }
-  | { type: "image"; media: MediaItem }
-  | { type: "quote"; text: string; attribution?: string }
-
-interface SemanticContent {
-  title: string;
-  description?: string;
-  authors?: Author[];
-  publishedAt?: string;   // ISO 8601
-  updatedAt?: string;     // ISO 8601
-  tags?: string[];
-  breadcrumb?: Link[];
-  links?: Link[];
-  body: BodyBlock[];      // required, non-empty
-}
+${schemaSource}
 \`\`\``;
 
 export async function extract(html: string): Promise<SemanticContent> {
