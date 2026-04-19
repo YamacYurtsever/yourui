@@ -8,7 +8,7 @@ const urlIndex = args.indexOf("--url");
 const url = urlIndex !== -1 ? args[urlIndex + 1] : undefined;
 
 if (!url) {
-  console.error("Usage: npm run render -- --url <url> [--profile <id>] [--verbose]");
+  console.error("Usage: npm run process -- --url <url> [--profile <id>] [--verbose]");
   console.error(`Profiles: ${allProfiles.map((p) => p.id).join(", ")}`);
   process.exit(1);
 }

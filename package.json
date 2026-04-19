@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx watch src/process.ts",
     "build": "tsc",
     "typecheck": "tsc --noEmit",
-    "render": "node --env-file=.env node_modules/.bin/tsx src/index.ts",
+    "process": "node --env-file=.env node_modules/.bin/tsx src/process.ts",
     "serve": "tsx src/serve.ts",
     "test": "node --import tsx/esm --test tests/*.test.ts"
   },
