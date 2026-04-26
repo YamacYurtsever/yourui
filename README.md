@@ -1,4 +1,4 @@
-# YourUI
+# Your UI
 
 A semantic UI rendering pipeline. Takes a URL and an accessibility profile, extracts the page's content, and re-renders it as a fresh HTML/CSS page tailored to the user's needs.
 
