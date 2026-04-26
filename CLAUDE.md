@@ -1,4 +1,4 @@
-# YourUI
+# Your UI
 
 A semantic UI rendering pipeline where structured content + user profile → LLM → HTML/CSS. Accessibility is a first-class input, not a retrofit.
 
